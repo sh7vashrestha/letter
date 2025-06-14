@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>A Letter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="assets/icon.ico">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #8b7355 0%, #a0956b 50%, #b5a67c 100%);
+            font-family: 'Kalam', cursive;
+            color: #2c1810;
+            overflow-x: hidden;
+        }
+        
+        .wooden-desk {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(139, 115, 85, 0.8) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(160, 149, 107, 0.6) 0%, transparent 50%),
+                linear-gradient(45deg, #8b7355, #a0956b);
+            z-index: -1;
+        }
+
+        .envelope {
+            max-width: 380px;
+            margin: 50px auto;
+            background: linear-gradient(145deg, #d4b896, #c4a484);
+            padding: 40px 30px;
+            border-radius: 8px;
+            box-shadow: 
+                0 8px 32px rgba(44, 24, 16, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-align: center;
+            transform: rotate(-2deg);
+            position: relative;
+        }
+        
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 30px;
+            background: #8b4513;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        
+        .envelope::after {
+            content: '🔸';
+            position: absolute;
+            top: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            color: #d4af37;
+        }
+
+        .envelope:hover {
+            transform: rotate(-1deg) scale(1.05);
+            box-shadow: 
+                0 12px 40px rgba(44, 24, 16, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        
+        .envelope h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: #3e2f2f;
+            font-weight: 600;
+        }
+        
+        .envelope p {
+            font-size: 16px;
+            color: #5a4a3a;
+            font-style: italic;
+        }
+
+        .letter-container {
+            display: none;
+            max-width: 650px;
+            margin: 30px auto;
+            background: 
+                linear-gradient(45deg, transparent 49%, rgba(200, 180, 140, 0.1) 49%, rgba(200, 180, 140, 0.1) 51%, transparent 51%),
+                linear-gradient(-45deg, transparent 49%, rgba(200, 180, 140, 0.1) 49%, rgba(200, 180, 140, 0.1) 51%, transparent 51%),
+                #fef9f3;
+            background-size: 20px 20px, 20px 20px, 100% 100%;
+            padding: 80px 60px;
+            border: 1px solid #e8dcc6;
+            border-radius: 3px;
+            box-shadow: 
+                0 0 40px rgba(44, 24, 16, 0.2),
+                inset 0 0 120px rgba(245, 235, 220, 0.4);
+            position: relative;
+            animation: unfold 1.2s ease forwards;
+            transform: rotate(1deg);
+        }
+
+        
+        .letter-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 80px;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 0%, #ff6b6b 20%, #ff6b6b 80%, transparent 100%);
+            opacity: 0.6;
+        }
+        
+        .letter-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    transparent,
+                    transparent 31px,
+                    rgba(200, 180, 140, 0.3) 31px,
+                    rgba(200, 180, 140, 0.3) 33px
+                );
+            pointer-events: none;
+        }
+
+        @keyframes unfold {
+            0% { 
+                opacity: 0; 
+                transform: rotate(1deg) scale(0.8) translateY(-50px); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: rotate(1deg) scale(1) translateY(0); 
+            }
+        }
+
+        .letter-header {
+            text-align: right;
+            margin-bottom: 0px;
+            font-size: 16px;
+            color: #6b5b4f;
+            font-style: italic;
+        }
+
+        h1 {
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 42px;
+            margin-bottom: 10px;
+            color: #2c1810;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .letter {
+            font-size: 18px;
+            line-height: 2.2;
+            text-align: left;
+            /* white-space: pre-wrap; */
+            font-family: 'Kalam', cursive;
+            color: #2c1810;
+            position: relative;
+            z-index: 2;
+            text-indent: 10px;
+            transform: rotate(-0.3deg);
+        }
+        
+        .letter span {
+            margin-left: 5px;
+            display: inline-block;
+            position: relative;
+            animation: handwrite 0.1s ease-in-out;
+        }
+        
+        .letter span:nth-child(2n) { transform: rotate(0.2deg) translateY(-0.5px); }
+        .letter span:nth-child(3n) { transform: rotate(-0.1deg) translateY(0.3px); }
+        .letter span:nth-child(4n) { transform: rotate(0.1deg) translateY(-0.2px); }
+        .letter span:nth-child(5n) { transform: rotate(-0.2deg) translateY(0.4px); }
+        .letter span:nth-child(7n) { transform: rotate(0.3deg) translateY(-0.3px); }
+        
+        .word {
+            display: inline-block;
+            transform-origin: bottom left;
+        }
+        
+        .word:nth-child(odd) { transform: rotate(0.1deg); }
+        .word:nth-child(even) { transform: rotate(-0.1deg); }
+        .word:nth-child(3n) { transform: rotate(0.2deg) translateY(-0.2px); }
+        .word:nth-child(5n) { transform: rotate(-0.15deg) translateY(0.1px); }
+        
+        @keyframes handwrite {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .letter p {
+            margin-left: 4%;
+            position: relative;
+        }
+
+        .letter span:first-child {
+            margin-left: 40px;
+        }
+        
+        .letter p:first-child{
+            font-size: 30px;
+            font-family: 'Dancing Script', cursive;
+            margin-left: 0px;
+            line-height: 50px;
+            padding-right: 6px;
+            margin-top: 4px;
+            color: #b24a00;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .signature {
+            text-align: right;
+            margin-top: 80px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 32px;
+            color: #2c1810;
+            font-weight: 600;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .signature::before {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 0;
+            width: 200px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #8b4513);
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 50px;
+            color: #8b7355;
+            font-style: italic;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .ink-blot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgba(139, 69, 19, 0.3);
+            border-radius: 50%;
+            animation: fadeInBlot 2s ease forwards;
+        }
+        
+        .ink-blot:nth-child(1) { top: 200px; right: 100px; animation-delay: 3s; }
+        .ink-blot:nth-child(2) { bottom: 150px; left: 120px; animation-delay: 4s; }
+        
+        @keyframes fadeInBlot {
+            from { opacity: 0; transform: scale(0); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .date {
+            position: absolute;
+            top: 30px;
+            right: 60px;
+            font-size: 16px;
+            color: #6b5b4f;
+            font-style: italic;
+            transform: rotate(2deg);
+        }
+        
+        @media (max-width: 768px) {
+            .envelope {
+                margin: 20px;
+                max-width: none;
+            }
+            
+            .letter-container {
+                margin: 20px;
+                padding: 40px 30px;
+                max-width: none;
+            }
+            
+            .letter {
+                font-size: 16px;
+                line-height: 2;
+            }
+            
+            h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <audio id="player" loop>
+        <source src="./assets/music.mp3" type="audio/mpeg">
+    </audio>
+    <div class="wooden-desk"></div>
+    
+    <div class="envelope" onclick="openLetter()">
+        <h1>Click to Open</h1>
+        <p>A Letter Awaits</p>
+    </div>
+
+    <div class="letter-container" id="letter">
+        <div class="date">June 14, 2025</div>
+        <div class="ink-blot"></div>
+        <div class="ink-blot"></div>
+        <h1>Dear Reader</h1>
+
+        <div class="letter" id="letterText">
+            <p><span class="word">Greetings,</span></p>
+            <p><span class="word">[Your</span> <span class="word">letter</span> <span class="word">content</span> <span class="word">goes</span> <span class="word">here.</span> <span class="word">Feel</span> <span class="word">free</span> <span class="word">to</span> <span class="word">share</span> <span class="word">your</span> <span class="word">thoughts,</span> <span class="word">emotions,</span> <span class="word">or</span> <span class="word">stories.</span> <span class="word">This</span> <span class="word">space</span> <span class="word">is</span> <span class="word">yours.</span>]</span></p>
+        </div>
+
+        <div class="signature">
+            Yours sincerely,<br>
+            Shiva
+        </div>
+        
+        <div class="footer">
+           Ink flows where the soul dares to speak ♡
+        </div>
+    </div>
+
+    <script>
+        function openLetter() {
+            document.querySelector('.envelope').style.display = 'none';
+            document.getElementById('letter').style.display = 'block';
+
+            // Start audio after user click
+            const audio = document.getElementById("player");
+            audio.volume = 0;
+            audio.play();
+
+            let targetVolume = 0.5;
+            let fadeSpeed = 200;
+            let volumeStep = 0.01;
+            let fadeIn = setInterval(() => {
+              if (audio.volume < targetVolume) {
+                audio.volume = Math.min(audio.volume + volumeStep, targetVolume);
+              } else {
+                clearInterval(fadeIn);
+              }
+            }, fadeSpeed);
+        
+            setTimeout(() => {
+                document.body.style.background = 'linear-gradient(135deg, #f4f1ea 0%, #faf8f3 50%, #fff 100%)';
+            }, 600);
+        
+            setTimeout(() => {
+                const words = document.querySelectorAll('.word');
+                words.forEach((word, index) => {
+                    word.style.opacity = '0';
+                    setTimeout(() => {
+                        word.style.opacity = '1';
+                        word.style.animation = 'handwrite 0.3s ease-in-out';
+                    }, index * 50);
+                });
+        }, 1000);
+}
+</script>
+</body>
+</html>
