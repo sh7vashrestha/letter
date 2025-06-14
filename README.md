@@ -54,6 +54,9 @@ Each `span.word` allows the script to animate individual word appearances. When 
 - **Music** – Replace `assets/music.mp3` with your own file, or remove the `<audio>` element if not needed.
 - **Icon** – Replace `assets/icon.png` with your own image and update the `<link rel="icon">` path in the HTML `<head>`.
 
+## Live Demo
+[Website](https://sh7vashrestha.github.io/letter/)
+
 ## 📝 Notes
 
 - This is a front-end-only project. No server or backend setup is required.
